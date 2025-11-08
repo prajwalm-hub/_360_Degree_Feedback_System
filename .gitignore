@@ -1,0 +1,96 @@
+# Dependencies
+node_modules/
+backend/venv/
+backend/__pycache__/
+backend/**/__pycache__/
+
+# Build outputs
+dist/
+build/
+frontend/dist/
+frontend/build/
+
+# Environment variables
+.env
+.env.local
+.dev.vars
+
+# IDEs
+.vscode/
+.idea/
+*.swp
+*.swo
+
+# OS
+.DS_Store
+Thumbs.db
+
+# Mocha/Wrangler (legacy)
+.wrangler/
+worker-configuration.d.ts
+
+# Logs
+*.log
+logs/
+
+# Database
+*.db
+*.sqlite
+
+# Models cache
+.cache/
+model_cache/
+
+# Python
+*.pyc
+*.pyo
+*.pyd
+.Python
+*.so
+*.egg
+*.egg-info/
+dist/
+build/
+.pytest_cache/
+
+# Node
+package-lock.json
+yarn.lock
+pnpm-lock.yaml
+
+# Temporary documentation and setup files
+*_SUMMARY.md
+*_GUIDE.md
+*_FIXED.md
+*_STATUS.md
+*_FIX.md
+*_UPDATE.md
+*_REPORT.md
+*_VERIFICATION.md
+*_COMPLETE.md
+*_SETUP.md
+*_IMPLEMENTATION.md
+*_DEBUG.md
+*_SOLUTION.md
+*_INTEGRATION.md
+*.bat
+test_api.py
+apply_expansion.py
+
+# Keep only essential docs
+!README.md
+!QUICK_START.md
+!QUICK_REFERENCE.md
+
+# Virtual environment
+.venv/
+venv/
+
+
+# Backend artifacts
+backend/newsdb.sqlite
+backend/vector_cache/
+# Frontend env files (local/dev/production should not be tracked)
+frontend/.env*
+*.env.*
+
