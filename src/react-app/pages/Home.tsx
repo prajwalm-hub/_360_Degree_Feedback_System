@@ -6,26 +6,26 @@ import SentimentAnalysis from '../components/SentimentAnalysis';
 import LanguageInsights from '../components/LanguageInsights';
 
 export default function Home() {
-  const [activeTab, setActiveTab] = useState('dashboard');
+  const [activeTab, setActiveTab] = useState('sentiment');
 
   const renderContent = () => {
     switch (activeTab) {
       case 'dashboard':
         return <Dashboard />;
-      case 'articles':
+      case 'news':
         return <NewsFeed />;
+      case 'assistant':
+        return (
+          <div className="bg-white rounded-xl p-8 shadow-lg border border-gray-200 text-center">
+            <h2 className="text-2xl font-bold text-gray-900 mb-4">AI Assistant</h2>
+            <p className="text-gray-600">AI-powered news analysis assistant coming soon...</p>
+          </div>
+        );
       case 'alerts':
         return (
           <div className="bg-white rounded-xl p-8 shadow-lg border border-gray-200 text-center">
             <h2 className="text-2xl font-bold text-gray-900 mb-4">PIB Alerts</h2>
-            <p className="text-gray-600">Real-time government news alerts and notifications coming soon...</p>
-          </div>
-        );
-      case 'officers':
-        return (
-          <div className="bg-white rounded-xl p-8 shadow-lg border border-gray-200 text-center">
-            <h2 className="text-2xl font-bold text-gray-900 mb-4">PIB Officers</h2>
-            <p className="text-gray-600">Officer management and notification system coming soon...</p>
+            <p className="text-gray-600">Real-time government news alerts coming soon...</p>
           </div>
         );
       case 'sentiment':
@@ -34,7 +34,7 @@ export default function Home() {
         return (
           <div className="bg-white rounded-xl p-8 shadow-lg border border-gray-200 text-center">
             <h2 className="text-2xl font-bold text-gray-900 mb-4">Geographic View</h2>
-            <p className="text-gray-600">Regional news coverage mapping functionality coming soon...</p>
+            <p className="text-gray-600">Regional news coverage mapping coming soon...</p>
           </div>
         );
       case 'language':
@@ -43,25 +43,18 @@ export default function Home() {
         return (
           <div className="bg-white rounded-xl p-8 shadow-lg border border-gray-200 text-center">
             <h2 className="text-2xl font-bold text-gray-900 mb-4">Topic Categories</h2>
-            <p className="text-gray-600">Government department categorization and analysis coming soon...</p>
-          </div>
-        );
-      case 'filters':
-        return (
-          <div className="bg-white rounded-xl p-8 shadow-lg border border-gray-200 text-center">
-            <h2 className="text-2xl font-bold text-gray-900 mb-4">Advanced Filters</h2>
-            <p className="text-gray-600">Advanced filtering and search capabilities coming soon...</p>
+            <p className="text-gray-600">Topic categorization coming soon...</p>
           </div>
         );
       case 'settings':
         return (
           <div className="bg-white rounded-xl p-8 shadow-lg border border-gray-200 text-center">
             <h2 className="text-2xl font-bold text-gray-900 mb-4">Settings</h2>
-            <p className="text-gray-600">System configuration and preferences coming soon...</p>
+            <p className="text-gray-600">System settings coming soon...</p>
           </div>
         );
       default:
-        return <Dashboard />;
+        return <SentimentAnalysis />;
     }
   };
 

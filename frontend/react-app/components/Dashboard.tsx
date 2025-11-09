@@ -7,7 +7,7 @@ import {
   BarChart3
 } from 'lucide-react';
 import { PieChart, Pie, Cell, ResponsiveContainer, BarChart, Bar, XAxis, YAxis, Tooltip } from 'recharts';
-import type { DashboardStats } from '@/shared/types';
+import type { DashboardStats } from '../../shared/types';
 
 const SENTIMENT_COLORS = {
   positive: '#10B981',

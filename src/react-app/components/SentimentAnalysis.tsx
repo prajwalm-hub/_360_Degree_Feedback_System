@@ -5,7 +5,9 @@ import {
   Minus, 
   RefreshCw,
   Calendar,
-  BarChart3
+  BarChart3,
+  Newspaper,
+  Settings
 } from 'lucide-react';
 import { BarChart, Bar, XAxis, YAxis, CartesianGrid, Tooltip, ResponsiveContainer, LineChart, Line } from 'recharts';
 
@@ -27,30 +29,31 @@ export default function SentimentAnalysis() {
   const [sentimentData, setSentimentData] = useState<SentimentData>({ positive: 0, negative: 0, neutral: 0 });
   const [trendData, setTrendData] = useState<TrendData[]>([]);
   const [loading, setLoading] = useState(true);
+  const [timeRange, setTimeRange] = useState('24h');
+  const [language, setLanguage] = useState('all');
 
   useEffect(() => {
     fetchSentimentData();
-  }, []);
+  }, [timeRange, language]);
 
   const fetchSentimentData = async () => {
     try {
       setLoading(true);
       
       // Get dashboard stats for sentiment distribution
-      const statsResponse = await fetch('/api/dashboard/stats');
+      const statsResponse = await fetch('/api/v1/dashboard/stats/');
       const statsData = await statsResponse.json();
       
-      if (statsData.success) {
-        setSentimentData(statsData.data.sentiment_distribution);
+      if (statsData) {
+        setSentimentData(statsData.sentiment_distribution || { positive: 0, negative: 0, neutral: 0 });
       }
       
       // Get sentiment analytics for trends
-      const analyticsResponse = await fetch('/api/analytics/sentiment?days=7');
+      const analyticsResponse = await fetch('/api/v1/sentiment_analytics/');
       const analyticsData = await analyticsResponse.json();
       
-      if (analyticsData.success) {
-        // Process the data into trend format
-        const processedTrends = processAnalyticsData(analyticsData.data || []);
+      if (analyticsData && Array.isArray(analyticsData)) {
+        const processedTrends = processAnalyticsData(analyticsData);
         setTrendData(processedTrends);
       }
     } catch (error) {
@@ -91,20 +94,61 @@ export default function SentimentAnalysis() {
   return (
     <div className="space-y-6">
       {/* Header */}
-      <div className="bg-gradient-to-r from-green-600 to-blue-700 rounded-2xl p-8 text-white">
-        <div className="flex items-center justify-between">
-          <div>
-            <h1 className="text-3xl font-bold mb-2">Sentiment Analysis</h1>
-            <p className="text-green-100">Monitor public sentiment trends across government news coverage</p>
+      <div className="bg-white rounded-xl p-6 shadow-sm border border-gray-200">
+        <div className="flex items-center justify-between mb-6">
+          <div className="flex items-center space-x-3">
+            <div className="w-12 h-12 bg-orange-100 rounded-xl flex items-center justify-center">
+              <Newspaper className="w-6 h-6 text-orange-600" />
+            </div>
+            <div>
+              <h1 className="text-2xl font-bold text-gray-900">NewsScope India</h1>
+              <p className="text-sm text-gray-600">360° Regional News Monitoring</p>
+            </div>
           </div>
-          <button
-            onClick={fetchSentimentData}
-            disabled={loading}
-            className="flex items-center space-x-2 px-4 py-2 bg-white/20 hover:bg-white/30 rounded-lg transition-colors"
-          >
-            <RefreshCw className={`w-4 h-4 ${loading ? 'animate-spin' : ''}`} />
-            <span>Refresh</span>
-          </button>
+          <div className="flex items-center space-x-4">
+            <input
+              type="text"
+              placeholder="Search news articles..."
+              className="px-4 py-2 border border-gray-300 rounded-lg focus:outline-none focus:ring-2 focus:ring-blue-500 w-64"
+            />
+            <button className="w-10 h-10 bg-gray-100 rounded-lg flex items-center justify-center hover:bg-gray-200">
+              <Settings className="w-5 h-5 text-gray-600" />
+            </button>
+            <div className="w-10 h-10 bg-green-500 rounded-full flex items-center justify-center text-white font-bold">
+              A
+            </div>
+          </div>
+        </div>
+
+        {/* Filters */}
+        <div className="grid grid-cols-2 gap-4">
+          <div>
+            <label className="block text-sm font-medium text-gray-700 mb-2">Language</label>
+            <select
+              value={language}
+              onChange={(e) => setLanguage(e.target.value)}
+              className="w-full px-4 py-2 border border-gray-300 rounded-lg focus:outline-none focus:ring-2 focus:ring-blue-500"
+            >
+              <option value="all">All Languages</option>
+              <option value="en">English</option>
+              <option value="hi">Hindi</option>
+              <option value="kn">Kannada</option>
+              <option value="ta">Tamil</option>
+              <option value="te">Telugu</option>
+            </select>
+          </div>
+          <div>
+            <label className="block text-sm font-medium text-gray-700 mb-2">Time Range</label>
+            <select
+              value={timeRange}
+              onChange={(e) => setTimeRange(e.target.value)}
+              className="w-full px-4 py-2 border border-gray-300 rounded-lg focus:outline-none focus:ring-2 focus:ring-blue-500"
+            >
+              <option value="24h">Last 24 hours</option>
+              <option value="7d">Last 7 days</option>
+              <option value="30d">Last 30 days</option>
+            </select>
+          </div>
         </div>
       </div>
 

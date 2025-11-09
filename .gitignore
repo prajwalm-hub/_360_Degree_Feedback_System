@@ -7,7 +7,8 @@ worker-configuration.d.ts
 
 # Python
 __pycache__/
-*.py[cod]
+*.pyc
+*.pyo
 *$py.class
 *.so
 .Python
@@ -48,8 +49,7 @@ query
 rss_feed_test_results.txt
 
 # Batch scripts (user-specific)
-*.bat
+
 
 # Test files
-test_api.py
-apply_expansion.py
+
